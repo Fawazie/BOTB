@@ -1,0 +1,25 @@
+// routes/ai.routes.js
+const express = require('express');
+const router = express.Router();
+const { generateVideoWithPika, generateVideoWithRunway } = require('../services/aiVideoService');
+
+router.post('/generate-video', async (req, res, next) => {
+  try {
+    const { inputData, platform } = req.body;
+    let result;
+
+    if (platform === 'pika') {
+      result = await generateVideoWithPika(inputData);
+    } else if (platform === 'runway') {
+      result = await generateVideoWithRunway(inputData);
+    } else {
+      return res.status(400).json({ error: 'Invalid platform specified' });
+    }
+
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;
