@@ -102,9 +102,9 @@ project/
    ```
 2. **Install dependencies:**
    ```bash
-   npm install
-   # or
-   yarn install
+   npm install vite
+   # then
+   npm audit fix --force
    ```
 3. **Start the development server:**
    ```bash
