@@ -1,11 +1,10 @@
-// services/aiVideoService.js
 const { exec } = require('child_process');
 const path = require('path');
 
-const callPythonScript = (apiKey, platform, inputData) => {
+const callPythonScript = (apiKey, inputData) => {
   return new Promise((resolve, reject) => {
     const scriptPath = path.join(__dirname, '../apiHandler.py');
-    const args = JSON.stringify({ api_key: apiKey, platform, input_data: inputData });
+    const args = JSON.stringify({ api_key: apiKey, input_data: inputData });
 
     exec(`python3 ${scriptPath} '${args}'`, (error, stdout, stderr) => {
       if (error) {
@@ -28,10 +27,9 @@ const callPythonScript = (apiKey, platform, inputData) => {
 
 const generateVideoWithRunway = async (inputData) => {
   const apiKey = process.env.RUNWAY_API_KEY;
-  return callPythonScript(apiKey, 'runway', inputData);
+  return callPythonScript(apiKey, inputData);
 };
 
 module.exports = {
-  generateVideoWithPika,
   generateVideoWithRunway,
 };
