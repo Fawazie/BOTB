@@ -4,31 +4,23 @@ const mongoose = require('mongoose'); // Example for MongoDB
 
 dotenv.config();
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('MongoDB connection error:', err));
+const connectDB = require('./config/db');
+connectDB();
 
 const app = express();
 
 // Middleware
-require('./middleware')(app);
+const applyMiddleware = require('./middleware');
+applyMiddleware(app);
 
 // Routes
-const authRoutes = require('./routes/auth.routes');
-const companyRoutes = require('./routes/company.routes');
-const marketingRoutes = require('./routes/marketing.routes');
-const aiRoutes = require('./routes/ai.routes');
-const analyticsRoutes = require('./routes/analytics.routes');
+const authRoutes = require('./routes/authRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 app.use('/api/auth', authRoutes);
-app.use('/api/company', companyRoutes);
-app.use('/api/marketing', marketingRoutes);
 app.use('/api/ai', aiRoutes);
-app.use('/api/analytics', analyticsRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Error handler
 app.use(require('./errorHandler'));
@@ -39,4 +31,11 @@ app.listen(PORT, () => {
   console.log(`Environment: ${process.env.NODE_ENV}`);
 });
 
-module.exports = app;
+module.exports = (app) => {
+  app.use(helmet());
+  app.use(cors());
+  app.use(express.json({ limit: '50mb' }));
+  app.use(morgan('combined'));
+  app.use(compression());
+  app.use('/api/', apiLimiter);
+};
