@@ -90,14 +90,6 @@ project/
 │   ├── .env                    # API keys & environment variables
 └── README.md                   # Project documentation
 ```
-
----
-
-## Future Enhancements <a name = "future_enhancements"></a>
-- **Integration with AR/VR for immersive ad previews.**
-- **Advanced multi-language support for global markets.**
-- **AI-powered campaign budget optimization.**
-
 ---
 
 ## **🔧 Installation & Setup** <a name = "setup"></a>
