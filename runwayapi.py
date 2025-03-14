@@ -1,4 +1,6 @@
 from runwayml import RunwayML
+import urllib.request
+from bs4 import BeautifulSoup
 
 
 # Replace the image link as needed for promp_image
@@ -27,10 +29,6 @@ client = RunwayML()
 
 task = client.tasks.retrieve(id="0522fe04-fc19-4f61-a25d-584b36fbfd48")
 print(task)
-
-import urllib.request
-from bs4 import BeautifulSoup
-from runwayml import RunwayML
 
 
 def get_video_url_from_page(page_url):
