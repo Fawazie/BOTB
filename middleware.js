@@ -1,3 +1,4 @@
+const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -6,7 +7,7 @@ const compression = require('compression');
 const multer = require('multer');
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('./model/User');
 
 // Rate limiting
 const apiLimiter = rateLimit({
